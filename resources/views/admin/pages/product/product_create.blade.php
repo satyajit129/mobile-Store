@@ -24,20 +24,21 @@
             background-color: #f2f2f2;
         }
     </style>
-        <style>
-                .dropzone-section {
-                    width: 100%;
-                    border: 2px dashed #ccc;
-                    padding: 20px;
-                    text-align: center;
-                    position: relative;
-                }
-                .dropzone-section .plus-icon {
-                    font-size: 48px;
-                    color: #999;
-                    margin-bottom: 10px;
-                }
-        </style>
+    <style>
+        .dropzone-section {
+            width: 100%;
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .dropzone-section .plus-icon {
+            font-size: 48px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+    </style>
 @endsection
 
 
@@ -163,15 +164,14 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="OperatingSystem">Operating system</label>
-                                    <select class="form-control">
+                                    <select class="form-control" id="OperatingSystem">
                                         <option value="" selected disabled>Select Operating System</option>
-                                        <option value="windows">Windows</option>
-                                        <option value="macos">macOS</option>
-                                        <option value="linux">Linux</option>
-                                        <option value="android">Android</option>
-                                        <option value="ios">iOS</option>
-                                        <option value="chromeos">Chrome OS</option>
-                                        <option value="bsd">BSD</option>
+                                        @foreach ($operating_system_lists as $operating_system_list)
+                                            <option value="{{ $operating_system_list->id }}"
+                                                data-category-id="{{ $operating_system_list->category_id }}">
+                                                {{ $operating_system_list->operating_system_name }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -336,7 +336,7 @@
                                 </div>
                             </div>
 
-                            
+
 
                         </div>
                         <!-- Dropzone Section -->
@@ -373,6 +373,7 @@
             $('#categorySelect').change(function() {
                 var categoryId = $(this).val();
                 console.log(categoryId);
+
                 $('#subcategorySelect option').each(function() {
                     if ($(this).data('category-id') == categoryId || categoryId === '') {
                         $(this).show();
@@ -380,8 +381,8 @@
                         $(this).hide();
                     }
                 });
-                $('#subcategorySelect').val('').prop('disabled',
-                    false);
+                $('#subcategorySelect').val('').prop('disabled', false);
+
             });
 
             $('#subcategorySelect').change(function() {
@@ -399,21 +400,39 @@
             });
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#categorySelect').change(function() {
+                var categoryId = $(this).val();
+
+                $('#OperatingSystem option').each(function() {
+                    var optionOperatingSystemId = $(this).attr('data-category-id');
+                    if (optionOperatingSystemId === categoryId || categoryId === '') {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+                $('#OperatingSystem').val('');
+            });
+        });
+    </script>
+    {{-- drop zone --}}
     <script>
         var myDropzone = new Dropzone("#myDropzone", {
             url: "/upload",
-            autoProcessQueue: false, 
-            maxFilesize: 5, 
-            acceptedFiles: 'image/*', 
-            addRemoveLinks: true, 
+            autoProcessQueue: false,
+            maxFilesize: 5,
+            acceptedFiles: 'image/*',
+            addRemoveLinks: true,
             init: function() {
-        
+
                 this.on("addedfile", function(file) {
                     file.previewElement.querySelector(".dz-remove").classList.add("btn", "btn-danger");
                 });
 
-                this.on("removedfile", function(file) {
-                });
+                this.on("removedfile", function(file) {});
             }
         });
     </script>

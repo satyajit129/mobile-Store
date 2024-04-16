@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Product;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\OperatingSystem;
 use App\Models\Product;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
@@ -41,8 +42,9 @@ class ProductController extends Controller
             ->get();
     
         $brand_lists = Brand::where('status', 1)->latest()->get();
+        $operating_system_lists = OperatingSystem::where('status', 1)->latest()->get();
     
-        return view('admin.pages.product.product_create', compact('category_lists', 'subcategory_lists', 'brand_lists'));
+        return view('admin.pages.product.product_create', compact('category_lists', 'subcategory_lists', 'brand_lists','operating_system_lists'));
     }
     
 }
