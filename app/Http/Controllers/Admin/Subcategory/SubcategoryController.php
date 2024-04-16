@@ -40,7 +40,6 @@ class SubcategoryController extends Controller
     {
         $category_lists = Category::where('status', 1)->get();
         $subcategory_content = Subcategory::where('id', $id)->first();
-        // dd($subcategory_content);
         return view('admin.pages.subcategory.subcategory_content', compact('subcategory_content', 'category_lists'));
     }
     public function adminSubcategoryUpdate(Request $request, $id)

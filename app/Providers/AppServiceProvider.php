@@ -21,5 +21,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
         $router->aliasMiddleware('auth.admin', \App\Http\Middleware\AuthenticateAdminDashboard::class);
+        
     }
 }

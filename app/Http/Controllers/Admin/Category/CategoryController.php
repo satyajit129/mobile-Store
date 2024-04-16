@@ -80,7 +80,6 @@ class CategoryController extends Controller
         try {
             $category = Category::findOrFail($id);
             $category->update(['status' => 0]);
-            // Returning JSON response
             return response()->json(['message' => 'Category deleted successfully']);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error deleting category: ' . $e->getMessage()], 500);

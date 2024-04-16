@@ -10,7 +10,4 @@ class DashboardController extends Controller
     public function AdminDashboard(){
         return view('admin.pages.dashboard.dashboard');
     }
-    public function adminSettings(){
-        dd('ok');
-    }
 }

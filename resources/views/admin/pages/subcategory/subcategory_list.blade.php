@@ -29,10 +29,6 @@
         .table th {
             background-color: #f2f2f2;
         }
-
-        /* .table tbody tr:nth-child(even) {
-                        background-color: #f2f2f2;
-                    } */
     </style>
 @endsection
 
@@ -128,7 +124,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
 
                                 <div class="col-lg-12">
                                     <div class="form-group">
@@ -193,7 +189,8 @@
                     </div>
                     <div class="modal-footer px-4">
                         <button type="button" class="btn btn-smoke btn-pill" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary btn-pill" id="confirm-delete">Delete Subategory</button>
+                        <button type="button" class="btn btn-primary btn-pill" id="confirm-delete">Delete
+                            Subategory</button>
                     </div>
                 </div>
             </div>
@@ -234,39 +231,39 @@
         });
     </script>
 
-        {{--  delete Sub category --}}
-        <script>
-            $(document).ready(function() {
-                $('.delete-subcategory').click(function() {
-                    var subcategoryId = $(this).data('subcategory-id');
-                    console.log(subcategoryId);
-                    $('#modal-delete-subcategory').modal('show');
-                    $('#confirm-delete').data('subcategory-id', subcategoryId);
-                });
-    
-                $('#confirm-delete').click(function() {
-                    var subcategoryId = $(this).data('subcategory-id');
-                    var $tr = $('.subcategory_row').has('[data-subcategory-id="' + subcategoryId + '"]');
-    
-                    $.ajax({
-                        url: '{{ route('adminSubcategoryDelete') }}',
-                        method: 'GET',
-                        data: {
-                            subcategoryId: subcategoryId
-                        },
-                        success: function(response) {
-                            $('#modal-delete-subcategory').modal('hide');
-                            // Show Success Toaster 
-                            toastr.success(response.message);
-                            $tr.remove();
-                            console.log(response);
-                        },
-                        error: function(xhr, status, error) {
-                            // Handle the error here
-                            console.error(xhr.responseText);
-                        }
-                    });
+    {{--  delete Sub category --}}
+    <script>
+        $(document).ready(function() {
+            $('.delete-subcategory').click(function() {
+                var subcategoryId = $(this).data('subcategory-id');
+                console.log(subcategoryId);
+                $('#modal-delete-subcategory').modal('show');
+                $('#confirm-delete').data('subcategory-id', subcategoryId);
+            });
+
+            $('#confirm-delete').click(function() {
+                var subcategoryId = $(this).data('subcategory-id');
+                var $tr = $('.subcategory_row').has('[data-subcategory-id="' + subcategoryId + '"]');
+
+                $.ajax({
+                    url: '{{ route('adminSubcategoryDelete') }}',
+                    method: 'GET',
+                    data: {
+                        subcategoryId: subcategoryId
+                    },
+                    success: function(response) {
+                        $('#modal-delete-subcategory').modal('hide');
+                        // Show Success Toaster 
+                        toastr.success(response.message);
+                        $tr.remove();
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle the error here
+                        console.error(xhr.responseText);
+                    }
                 });
             });
-        </script>
+        });
+    </script>
 @endsection
